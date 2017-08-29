@@ -1,0 +1,9 @@
+.idea
+node_modules
+*.iml
+.env*
+*.log
+*log.gz
+coverage
+.vscode
+

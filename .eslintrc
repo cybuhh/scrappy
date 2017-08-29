@@ -1,0 +1,33 @@
+{
+  "extends": "airbnb-base",
+  "parserOptions": {
+    "sourceType": "script"
+  },
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "max-len": [
+      "error",
+      180
+    ],
+    "valid-jsdoc": [
+      "error",
+      {
+        "requireParamDescription": false,
+        "requireReturnDescription": false,
+        "requireReturn": false,
+        "prefer": {
+          "return": "returns"
+        },
+        "preferType": {
+          "boolean": "Boolean",
+          "number": "Number",
+          "object": "Object",
+          "function": "Function",
+          "string": "String"
+        }
+      }
+    ]
+  }
+}

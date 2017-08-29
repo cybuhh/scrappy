@@ -1,0 +1,19 @@
+{
+  "name": "scrappy",
+  "version": "1.0.0",
+  "description": "![513r3p01hyl _sy679_](https://user-images.githubusercontent.com/2033580/29814478-c241c266-8cad-11e7-9b94-06b04405bec0.jpg)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^0.10.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.5.0",
+    "eslint-config-airbnb-base": "^11.3.2",
+    "eslint-plugin-import": "^2.7.0"
+  }
+}
