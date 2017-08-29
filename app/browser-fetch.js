@@ -9,7 +9,7 @@ function querySelectorAll(selector) {
   const el = document.querySelectorAll(selector);
   const list = [];
   el.forEach(i => {
-    list.push(JSON.stringify(i));
+    list.push(i.href);
   });
   return list;
 }
