@@ -3,19 +3,32 @@
 const puppeteer = require('puppeteer');
 
 const browserFetch = require('./app/browser-fetch');
+const config = require('config');
+const redis = require('./app/redis')(config.get('redisDsn'));
+
+const redisTtl = config.get('redis.ttl');
+
+const processResult = redisClient => async (list) => {
+  const result = await redisClient.mget(list);
+  const newKeys = list.filter((v, k) => !result[k]);
+
+  if (newKeys.length) {
+    const pairs = [];
+    list.forEach(v => pairs.push(v, '1'));
+    await redisClient.mset(pairs);
+    await Promise.all(newKeys.map(i => redisClient.expire(i, redisTtl)));
+  }
+
+  return newKeys;
+};
 
 (async () => {
   const browser = await puppeteer.launch({
     headless: false,
   });
-  const fetch = browserFetch(browser);
+  const fetch = browserFetch(browser, processResult(redis));
   try {
-    const result = await Promise.all([
-      {
-        url: 'http://www.freedom-nieruchomosci.pl/nieruchomosci?locd=małopolskie+Kraków&marketd=secondary&typed=om&transd=s&locm=małopolskie+Kraków&marketm=w&typem=om&transm=s&price_from=200000&price_to=450000&totalArea_from=40&totalArea_to=60&noOfRooms_from=2&noOfRooms_to=&priceM2_from=&priceM2_to=&floorNo_from=&floorNo_to=&noOfFloors_from=&noOfFloors_to=&yearBuilt_from=&yearBuilt_to=&add_date_from=&searchd=wyszukaj',
-        selector: '#properties .property-list .properties > li a.more',
-      },
-    ].map(fetch));
+    const result = await Promise.all(config.sites.map(fetch));
     console.info(result);
   } catch (e) {
     console.error(e.message);
