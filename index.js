@@ -23,16 +23,15 @@ const processResult = redisClient => async (list) => {
 };
 
 (async () => {
-  const browser = await puppeteer.launch({
-    headless: false,
-  });
-  const fetch = browserFetch(browser, processResult(redis));
   try {
+    const browser = await puppeteer.launch({
+      headless: false,
+    });
+    const fetch = browserFetch(browser, processResult(redis));
     const result = await Promise.all(config.sites.map(fetch));
     console.info(result);
+    browser.close();
   } catch (e) {
     console.error(e.message);
-  } finally {
-    browser.close();
   }
 })();
