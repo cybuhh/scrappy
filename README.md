@@ -6,3 +6,9 @@ Based on https://www.npmjs.com/package/puppeteer
 
 requried env:
  - REDIS_DSN
+
+ref:
+ - https://github.com/MatthiasWinkelmann/lighthouse-chromium-alpine-docker
+ - https://github.com/GoogleChrome/lighthouse/issues/1932
+ - https://hub.docker.com/r/zenika/alpine-chrome/~/dockerfile/
+ - https://try-puppeteer.appspot.com

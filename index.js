@@ -24,13 +24,45 @@ const processResult = redisClient => async (list) => {
 
 (async () => {
   try {
+    /*const browser = await puppeteer.launch({
+      executablePath: config.get('chromiumPath'),
+      args: [
+        '--no-sandbox',
+        '--start-maximized',
+        `--remote-debugging-port=${config.get('chromeDebugPort')}`,
+      ],
+    });*/
+    /*const browser = await puppeteer.launch({
+      args: [
+        '--no-first-run',
+        '--disable-gpu',
+        '--disable-translate',
+        '--disable-default-apps',
+        '--disable-extensions',
+        '--disable-background-networking',
+        '--disable-sync',
+        '--metrics-recording-only',
+        '--safebrowsing-disable-auto-update',
+        '--disable-setuid-sandbox',
+        '--no-sandbox',
+      ],
+    });*/
     const browser = await puppeteer.launch({
-      headless: false,
+      executablePath: config.get('chromiumPath'),
+      args: [
+        '--headless',
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-gpu',
+        '--disable-translate',
+        '--disable-extensions',
+        `--remote-debugging-port=${config.get('chromeDebugPort')}`,
+      ],
     });
     const fetch = browserFetch(browser, processResult(redis));
     const result = await Promise.all(config.sites.map(fetch));
     console.info(result);
-    browser.close();
+    await browser.close();
   } catch (e) {
     console.error(e.message);
   }

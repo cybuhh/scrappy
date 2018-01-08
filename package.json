@@ -14,11 +14,10 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "8",
-    "npm": "^5.4.0"
+    "node": "9",
+    "npm": "^5.5.1"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
     "config": "^1.29.0",
     "puppeteer": "^0.13.0",
     "pushbullet": "^2.1.0",
